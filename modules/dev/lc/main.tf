@@ -1,9 +1,11 @@
 resource "aws_launch_configuration" "ec2_launch_conf" {
   name                          = "${var.env}_ec2_launch_conf"
   image_id                      = "${lookup(var.amis,var.region)}"
-  instance_type                 = "t2.micro"
+  instance_type                 = "${var.instance_type}"
   security_groups               = ["${var.security_group}"]
   key_name                      = "${var.key_name}"
+  associate_public_ip_address 	= "false"
+  enable_monitoring		= "true"
 
   user_data = <<-EOF
               #!/bin/bash
@@ -17,9 +19,9 @@ resource "aws_launch_configuration" "ec2_launch_conf" {
   root_block_device {
     delete_on_termination       = "true"
     encrypted                   = "false"
-    iops                        = "0"
-    volume_type                 = "standard"
-    volume_size                 = "8"
+    iops                        = "${var.iops}"
+    volume_type                 = "${var.volume_type}"
+    volume_size                 = "${var.volume_size}"
   }
 
   enable_monitoring             = "true"

@@ -1,3 +1,4 @@
+// Terraform Remote State
 module "trs" {
   source                	= "../modules/dev/trs"
   region                	= "${var.region}"
