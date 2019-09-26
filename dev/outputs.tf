@@ -26,12 +26,16 @@ output "subnet_private_az1_id" {
   value = "${module.subnet.subnet_private_az1_id}"
 }
 
+output "sg_bastion_id" {
+  value = "${module.sg.sg_bastion_id}"
+}
+
 output "sg_instance_id" {
   value = "${module.sg.sg_instance_id}"
 }
 
-output "sg_elb_id" {
-  value = "${module.sg.sg_elb_id}"
+output "sg_lb_id" {
+  value = "${module.sg.sg_lb_id}"
 }
 
 output "ssh_pair_ec2_id" {
@@ -50,6 +54,15 @@ output "nat_gateway_az1_id" {
   value = "${module.natgw.nat_gateway_az1_id}"
 }
 
-output "elb_id" {
-  value = "${module.elb.elb_id}"
+output "lb_id" {
+  value = "${module.lb.lb_id}"
 }
+
+output "lb_arn" {
+  value = "${module.lb.lb_arn}"
+}
+
+output "lb_target_group_80_arn" {
+  value = "${module.lbtg.lb_target_group_80_arn}"
+}
+

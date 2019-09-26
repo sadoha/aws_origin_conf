@@ -8,7 +8,7 @@ variable "subnet_private_az1" {}
 
 variable "ec2_launch_conf" {}
 
-variable "elb" {}
+variable "target_group_80_arn" {}
 
 variable "tags" {
   type    = "map"

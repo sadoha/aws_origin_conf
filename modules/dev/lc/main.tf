@@ -7,8 +7,10 @@ resource "aws_launch_configuration" "ec2_launch_conf" {
 
   user_data = <<-EOF
               #!/bin/bash
-              yum install httpd
-              systemctl start httpd
+              sudo yum install httpd -y
+              sudo chmod 777 /var/www/html/
+              sudo echo "test" >  /var/www/html/index.html
+              sudo systemctl start httpd
               sudo systemctl enable httpd
               EOF
 

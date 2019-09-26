@@ -4,6 +4,12 @@ resource "aws_route_table" "rtb_public" {
   tags          = "${merge(map("Name", "rtb-public-${var.env}-${var.name}"), var.tags)}"
 }
 
+resource "aws_route" "public_internet_gateway" {
+  route_table_id                = "${aws_route_table.rtb_public.id}"
+  destination_cidr_block        = "0.0.0.0/0"
+  gateway_id                    = "${var.gateway}"
+}
+
 resource "aws_route_table_association" "public_az0" {
   subnet_id      = "${var.subnet_public_az0}"
   route_table_id = "${aws_route_table.rtb_public.id}"
@@ -12,12 +18,6 @@ resource "aws_route_table_association" "public_az0" {
 resource "aws_route_table_association" "public_az1" {
   subnet_id      = "${var.subnet_public_az1}"
   route_table_id = "${aws_route_table.rtb_public.id}"
-}
-
-resource "aws_route" "public_internet_gateway" {
-  route_table_id                = "${aws_route_table.rtb_public.id}"
-  destination_cidr_block        = "0.0.0.0/0"
-  gateway_id                    = "${var.gateway}"
 }
 
 // Private
@@ -43,3 +43,14 @@ resource "aws_route" "private_nat_gateway_az1" {
   nat_gateway_id         = "${var.nat_gateway_az1}"
 }
 
+
+// Instances
+resource "aws_route_table_association" "private_subnet_az0" {
+  subnet_id       = "${var.subnet_private_az0}"
+  route_table_id  = "${aws_route_table.rtb_private_az0.id}"
+}
+
+resource "aws_route_table_association" "private_subnet_az1" {
+  subnet_id       = "${var.subnet_private_az1}"
+  route_table_id  = "${aws_route_table.rtb_private_az1.id}"
+}

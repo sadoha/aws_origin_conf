@@ -16,6 +16,6 @@ resource "aws_nat_gateway" "nat_gateway_az0" {
 
 resource "aws_nat_gateway" "nat_gateway_az1" {
   allocation_id = "${aws_eip.eip_nat_gateway_az1.id}"
-  subnet_id     = "${var.subnet_public_az0}"
+  subnet_id     = "${var.subnet_public_az1}"
   tags   	= "${merge(map("Name", "natgw-${var.azs[1]}-${var.env}-${var.name}"), var.tags)}"
 }

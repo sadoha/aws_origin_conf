@@ -4,11 +4,9 @@ variable "env" {}
 
 variable "vpc" {}
 
-variable "security_groups" {}
+variable "load_balancer_arn" {}
 
-variable "subnet_private_az0" {}
-
-variable "subnet_private_az1" {}
+variable "target_group_arn" {}
 
 variable "tags" {
   type    = "map"
