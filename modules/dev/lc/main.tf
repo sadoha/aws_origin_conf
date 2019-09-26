@@ -5,7 +5,6 @@ resource "aws_launch_configuration" "ec2_launch_conf" {
   security_groups               = ["${var.security_group}"]
   key_name                      = "${var.key_name}"
   associate_public_ip_address 	= "false"
-  enable_monitoring		= "true"
 
   user_data = <<-EOF
               #!/bin/bash
