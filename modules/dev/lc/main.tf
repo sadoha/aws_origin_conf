@@ -7,13 +7,18 @@ resource "aws_launch_configuration" "ec2_launch_conf" {
   associate_public_ip_address 	= "false"
 
   user_data = <<-EOF
-              #!/bin/bash
-              sudo yum install httpd -y
-              sudo chmod 777 /var/www/html/
-              sudo echo "It Works bro !!!" >  /var/www/html/index.html
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
-              EOF
+              	#!/bin/bash
+
+		sudo yum install epel-release.noarch -y
+              	sudo yum install httpd python-pip unzip -y
+	        curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+                unzip awscli-bundle.zip
+                sudo ./awscli-bundle/install -b ~/bin/aws 
+              	sudo chmod 777 /var/www/html/
+              	sudo echo 'It Works bro !!!' >  /var/www/html/index.html
+              	sudo systemctl start httpd
+              	sudo systemctl enable httpd
+              	EOF
 
   root_block_device {
     delete_on_termination       = "true"

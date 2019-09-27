@@ -86,6 +86,18 @@ module "sg" {
   }
 }
 
+// Amazon S3 Buckets
+module "s3" {
+  source                        = "../modules/dev/s3"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Terraformed                 = "true"
+  }
+}
+
 // Amazon Key Pairs
 module "key" {
   source                        = "../modules/dev/key"

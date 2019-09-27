@@ -30,5 +30,5 @@ resource "aws_s3_bucket" "terraform_state" {
     target_prefix = "log/"
   }
 
-  tags   = "${merge(map("Name", "s3-infra-terraform-state-${var.env}-${var.name}"), var.tags)}"
+  tags   = "${merge(map("Name", "s3-terraform-state-${var.env}-${var.name}"), var.tags)}"
 }
