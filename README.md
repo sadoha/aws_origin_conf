@@ -1,4 +1,4 @@
-_The origin configuration of AWS environments based on Terraform scripts._
+***The origin configuration of AWS environments based on Terraform scripts.***
 
   To use this configuration you have to do next steps:
   
