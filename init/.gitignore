@@ -1,4 +1,4 @@
-## This parameter have to be deleted if it is not a testing environment. 
+## This parameter { terraform.tfstate } have to be deleted if it is not a testing environment. 
 terraform.tfstate
 
 .terraform
