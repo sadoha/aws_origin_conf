@@ -10,7 +10,7 @@ resource "aws_launch_configuration" "ec2_launch_conf" {
               #!/bin/bash
               sudo yum install httpd -y
               sudo chmod 777 /var/www/html/
-              sudo echo "test" >  /var/www/html/index.html
+              sudo echo "It Works bro !!!" >  /var/www/html/index.html
               sudo systemctl start httpd
               sudo systemctl enable httpd
               EOF
