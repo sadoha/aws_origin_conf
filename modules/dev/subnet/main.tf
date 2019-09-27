@@ -1,6 +1,6 @@
 resource "aws_subnet" "subnet_public_az0" {
   vpc_id                        = "${var.vpc}"
-  cidr_block                    = "${var.cidr_block[0]}"
+  cidr_block                    = "${var.cidr_block_az0[0]}"
   availability_zone             = "${var.azs[0]}"
   map_public_ip_on_launch       = "true"
 
@@ -9,7 +9,7 @@ resource "aws_subnet" "subnet_public_az0" {
 
 resource "aws_subnet" "subnet_public_az1" {
   vpc_id                        = "${var.vpc}"
-  cidr_block                    = "${var.cidr_block[1]}"
+  cidr_block                    = "${var.cidr_block_az1[1]}"
   availability_zone             = "${var.azs[1]}"
   map_public_ip_on_launch       = "true"
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "subnet_public_az1" {
 
 resource "aws_subnet" "subnet_private_az0" {
   vpc_id 			= "${var.vpc}"
-  cidr_block 			= "${var.cidr_block[2]}"
+  cidr_block 			= "${var.cidr_block_az0[2]}"
   availability_zone 		= "${var.azs[0]}"
   map_public_ip_on_launch 	= true
 
@@ -27,7 +27,7 @@ resource "aws_subnet" "subnet_private_az0" {
 
 resource "aws_subnet" "subnet_private_az1" {
   vpc_id 			= "${var.vpc}"
-  cidr_block 			= "${var.cidr_block[3]}"
+  cidr_block 			= "${var.cidr_block_az1[3]}"
   availability_zone 		= "${var.azs[1]}"
   map_public_ip_on_launch 	= true
 
