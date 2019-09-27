@@ -1,9 +1,3 @@
-// Terraform Remote State
-module "trs" {
-  source                	= "../modules/dev/trs"
-  region                	= "${var.region}"
-}
-
 // Amazon Virtual Private Cloud
 module "vpc" {
   source                	= "../modules/dev/vpc"
