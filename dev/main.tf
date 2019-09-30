@@ -205,3 +205,17 @@ module "lbl" {
   }
 }
 
+// Amazon Virtual Private Cloud
+module "mq" {
+  source                        = "../modules/dev/mq"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  security_groups		= "${module.sg.sg_mq_broker_id}"
+  subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Terraformed                 = "true"
+  }
+}

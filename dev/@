@@ -1,0 +1,33 @@
+
+output "vpc_id" {
+  value = "${module.vpc.vpc_id}"
+}
+
+output "subnet_public_az0_id" {
+  value = "${module.subnet.subnet_public_az0_id}"
+}
+
+output "subnet_public_az1_id" {
+  value = "${module.subnet.subnet_public_az1_id}"
+}
+
+output "subnet_private_az0_id" {
+  value = "${module.subnet.subnet_private_az0_id}"
+}
+
+output "subnet_private_az1_id" {
+  value = "${module.subnet.subnet_private_az1_id}"
+}
+
+output "sg_mq_broker_id" {
+  value = "${module.sg.sg_mq_broker_id}"
+}
+
+output "ssh_pair_ec2_id" {
+  value = "${module.key.ssh_pair_ec2_id}"
+}
+
+output "mq_broker_password" {
+  value = "${module.mq.mq_broker_password}"
+}
+

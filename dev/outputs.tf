@@ -1,68 +1,71 @@
-output "vpc_cidr" {
-  value = "${module.vpc.vpc_cidr}"
+//Load balancers
+output "lb_dns_name" {
+  value = "${module.lb.lb_dns_name}"
 }
 
-output "vpc_id" {
-  value = "${module.vpc.vpc_id}"
+
+// Amazon MQ
+output "mq_username" {
+  value = "${module.mq.mq_username}"
 }
 
-output "ig_id" {
-  value = "${module.ig.ig_id}"
+output "mq_password" {
+  value = "${module.mq.mq_password}"
 }
 
-output "subnet_public_az0_id" {
-  value = "${module.subnet.subnet_public_az0_id}"
+output "mq_primary_console_url" {
+  value = "${module.mq.mq_primary_console_url}"
 }
 
-output "subnet_public_az1_id" {
-  value = "${module.subnet.subnet_public_az1_id}"
+output "mq_primary_ssl_endpoint" {
+  value = "${module.mq.mq_primary_ssl_endpoint}"
 }
 
-output "subnet_private_az0_id" {
-  value = "${module.subnet.subnet_private_az0_id}"
+output "mq_primary_amqp_ssl_endpoint" {
+  value = "${module.mq.mq_primary_amqp_ssl_endpoint}"
 }
 
-output "subnet_private_az1_id" {
-  value = "${module.subnet.subnet_private_az1_id}"
+output "mq_primary_stomp_ssl_endpoint" {
+  value = "${module.mq.mq_primary_stomp_ssl_endpoint}"
 }
 
-output "sg_bastion_id" {
-  value = "${module.sg.sg_bastion_id}"
+output "mq_primary_mqtt_ssl_endpoint" {
+  value = "${module.mq.mq_primary_mqtt_ssl_endpoint}"
 }
 
-output "sg_instance_id" {
-  value = "${module.sg.sg_instance_id}"
+output "mq_primary_wss_endpoint" {
+  value = "${module.mq.mq_primary_wss_endpoint}"
 }
 
-output "sg_lb_id" {
-  value = "${module.sg.sg_lb_id}"
+output "mq_primary_ip_address" {
+  value = "${module.mq.mq_primary_ip_address}"
 }
 
-output "ssh_pair_ec2_id" {
-  value = "${module.key.ssh_pair_ec2_id}"
+
+output "mq_secondary_console_url" {
+  value = "${module.mq.mq_primary_console_url}"
 }
 
-output "ec2_launch_conf_id" {
-  value = "${module.lc.ec2_launch_conf_id}"
+output "mq_secondary_ssl_endpoint" {
+  value = "${module.mq.mq_secondary_ssl_endpoint}"
 }
 
-output "nat_gateway_az0_id" {
-  value = "${module.natgw.nat_gateway_az0_id}"
+output "mq_secondary_amqp_ssl_endpoint" {
+  value = "${module.mq.mq_secondary_amqp_ssl_endpoint}"
 }
 
-output "nat_gateway_az1_id" {
-  value = "${module.natgw.nat_gateway_az1_id}"
+output "mq_secondary_stomp_ssl_endpoint" {
+  value = "${module.mq.mq_secondary_stomp_ssl_endpoint}"
 }
 
-output "lb_id" {
-  value = "${module.lb.lb_id}"
+output "mq_secondary_mqtt_ssl_endpoint" {
+  value = "${module.mq.mq_secondary_mqtt_ssl_endpoint}"
 }
 
-output "lb_arn" {
-  value = "${module.lb.lb_arn}"
+output "mq_secondary_wss_endpoint" {
+  value = "${module.mq.mq_secondary_wss_endpoint}"
 }
 
-output "lb_target_group_80_arn" {
-  value = "${module.lbtg.lb_target_group_80_arn}"
+output "mq_secondary_ip_address" {
+  value = "${module.mq.mq_secondary_ip_address}"
 }
-

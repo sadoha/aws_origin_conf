@@ -10,3 +10,7 @@ output "sg_lb_id" {
   value = "${aws_security_group.lb.id}"
 }
 
+output "sg_mq_broker_id" {
+  value = "${aws_security_group.mq_broker.id}"
+}
+
