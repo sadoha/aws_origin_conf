@@ -184,3 +184,39 @@ resource "aws_security_group" "mq_broker" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "elasticache" {
+  vpc_id        = "${var.vpc}"
+  name          = "${var.env}-elasticache"
+  description   = "Allow trafic to elasticache"
+
+  tags          = "${merge(map("Name", "sg-elasticache${var.name}-${var.env}"), var.tags)}"
+
+  ingress {
+    from_port   = 11211
+    to_port     = 11211
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}

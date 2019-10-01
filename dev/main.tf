@@ -205,7 +205,7 @@ module "lbl" {
   }
 }
 
-// Amazon Virtual Private Cloud
+// Amazon MQ 
 module "mq" {
   source                        = "../modules/dev/mq"
   name                          = "${var.name}"
@@ -213,6 +213,23 @@ module "mq" {
   security_groups		= "${module.sg.sg_mq_broker_id}"
   subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
   subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Terraformed                 = "true"
+  }
+}
+
+// Amazon ElastiCache
+module "elc" {
+  source                        = "../modules/dev/elc"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  vpc                           = "${module.vpc.vpc_id}"
+  azs                   	= "${var.azs}"
+  subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
+  security_group		= "${module.sg.sg_elasticache_id}"
 
   tags = {
     Infra                       = "${var.name}"

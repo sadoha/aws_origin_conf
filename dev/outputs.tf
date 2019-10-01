@@ -3,7 +3,6 @@ output "lb_dns_name" {
   value = "${module.lb.lb_dns_name}"
 }
 
-
 // Amazon MQ
 output "mq_username" {
   value = "${module.mq.mq_username}"
@@ -41,7 +40,6 @@ output "mq_primary_ip_address" {
   value = "${module.mq.mq_primary_ip_address}"
 }
 
-
 output "mq_secondary_console_url" {
   value = "${module.mq.mq_primary_console_url}"
 }
@@ -68,4 +66,17 @@ output "mq_secondary_wss_endpoint" {
 
 output "mq_secondary_ip_address" {
   value = "${module.mq.mq_secondary_ip_address}"
+}
+
+// Amazon ElastiCache
+output "redis_cluster_endpoint_address" {
+  value = "${module.elc.redis_cluster_endpoint_address}"
+}
+
+output "redis_cluster_endpoint_port" {
+  value = "${module.elc.redis_cluster_endpoint_port}"
+}
+
+output "memcached_cluster_endpoint_address" {
+  value = "${module.elc.memcached_cluster_endpoint_address}"
 }
