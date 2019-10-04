@@ -190,7 +190,7 @@ resource "aws_security_group" "elasticache" {
   name          = "${var.env}-elasticache"
   description   = "Allow trafic to elasticache"
 
-  tags          = "${merge(map("Name", "sg-elasticache${var.name}-${var.env}"), var.tags)}"
+  tags          = "${merge(map("Name", "sg-elasticache-${var.name}-${var.env}"), var.tags)}"
 
   ingress {
     from_port   = 11211
@@ -202,6 +202,35 @@ resource "aws_security_group" "elasticache" {
   ingress {
     from_port   = 6379
     to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "rds" {
+  vpc_id        = "${var.vpc}"
+  name          = "${var.env}-rds"
+  description   = "Allow trafic to RDS"
+
+  tags          = "${merge(map("Name", "sg-rds-${var.name}-${var.env}"), var.tags)}"
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

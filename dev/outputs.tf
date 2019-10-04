@@ -1,3 +1,4 @@
+/*
 //Load balancers
 output "lb_dns_name" {
   value = "${module.lb.lb_dns_name}"
@@ -80,3 +81,29 @@ output "redis_cluster_endpoint_port" {
 output "memcached_cluster_endpoint_address" {
   value = "${module.elc.memcached_cluster_endpoint_address}"
 }
+
+// Amazon RDS
+output "db_instance_password" {
+  value = "${module.rds.db_instance_password}"
+}
+
+output "db_instance_dbname" {
+  value = "${module.rds.db_instance_dbname}"
+}
+
+output "db_instance_username" {
+  value = "${module.rds.db_instance_username}"
+}
+
+output "db_instance_endpoint" {
+  value = "${module.rds.db_instance_endpoint}"
+}
+
+output "db_instance_replica_endpoint1" {
+  value = "${module.rds.db_instance_replica_endpoint1}"
+}
+
+output "db_instance_replica_endpoint2" {
+  value = "${module.rds.db_instance_replica_endpoint2}"
+}
+*/

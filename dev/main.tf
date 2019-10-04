@@ -6,6 +6,7 @@ module "vpc" {
 
   tags = {
     Infra               	= "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed         	= "true"
   }
 }
@@ -19,6 +20,7 @@ module "ig" {
 
   tags = {
     Infra               	= "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed         	= "true"
   }
 }
@@ -33,6 +35,7 @@ module "subnet" {
 
   tags = {
     Infra               	= "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed         	= "true"
   }
 }
@@ -48,6 +51,7 @@ module "natgw" {
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -61,14 +65,23 @@ module "rtb" {
   azs                   	= "${var.azs}"
   subnet_public_az0		= "${module.subnet.subnet_public_az0_id}"
   subnet_public_az1		= "${module.subnet.subnet_public_az1_id}"
-  subnet_private_az0		= "${module.subnet.subnet_private_az0_id}"
-  subnet_private_az1		= "${module.subnet.subnet_private_az1_id}"
+  subnet_private_ec2_az0	= "${module.subnet.subnet_private_ec2_az0_id}"
+  subnet_private_ec2_az1	= "${module.subnet.subnet_private_ec2_az1_id}"
+  subnet_private_asg_az0	= "${module.subnet.subnet_private_asg_az0_id}"
+  subnet_private_asg_az1	= "${module.subnet.subnet_private_asg_az1_id}"
+  subnet_private_elc_az0	= "${module.subnet.subnet_private_elc_az0_id}"
+  subnet_private_elc_az1	= "${module.subnet.subnet_private_elc_az1_id}"
+  subnet_private_mq_az0		= "${module.subnet.subnet_private_mq_az0_id}"
+  subnet_private_mq_az1		= "${module.subnet.subnet_private_mq_az1_id}"
+  subnet_private_rds_az0	= "${module.subnet.subnet_private_rds_az0_id}"
+  subnet_private_rds_az1	= "${module.subnet.subnet_private_rds_az1_id}"
   gateway			= "${module.ig.ig_id}"
   nat_gateway_az0		= "${module.natgw.nat_gateway_az0_id}"
   nat_gateway_az1		= "${module.natgw.nat_gateway_az1_id}"
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -82,7 +95,21 @@ module "sg" {
 
   tags = {
     Infra               	= "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed         	= "true"
+  }
+}
+
+// Amazon Key Management Service
+module "kms" {
+  source                        = "../modules/dev/kms"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
   }
 }
 
@@ -91,9 +118,25 @@ module "s3" {
   source                        = "../modules/dev/s3"
   name                          = "${var.name}"
   env                           = "${var.env}"
+  kms_key			= "${module.kms.kms_s3_key_arn}"
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+
+// Amazon IAM Roles
+module "iamroles" {
+  source                        = "../modules/dev/iamroles"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  s3_bucket			= "${module.s3.s3_asg_id}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -106,6 +149,7 @@ module "key" {
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -118,6 +162,7 @@ module "ec2" {
   azs                   	= "${var.azs}"
   amis                          = "${var.amis}"
   region                        = "${var.region}"
+  iam_instance_profile		= "${module.iamroles.iam_instance_profile_s3asg_name}"
   key_name                      = "${module.key.ssh_pair_ec2_id}"
   security_group                = "${module.sg.sg_bastion_id}"
   subnet_public_az1		= "${module.subnet.subnet_public_az1_id}"
@@ -129,18 +174,21 @@ module "ec2" {
   }
 }
 
-// Amazon Launch Configuration
-module "lc" {
-  source                        = "../modules/dev/lc"
+// Amazon Launch Template
+module "lat" {
+  source                        = "../modules/dev/lat"
   name                          = "${var.name}"
   env                           = "${var.env}"
   amis                          = "${var.amis}"
   region                        = "${var.region}"
+  iam_instance_profile		= "${module.iamroles.iam_instance_profile_s3asg_name}"
   key_name                      = "${module.key.ssh_pair_ec2_id}"
   security_group               	= "${module.sg.sg_instance_id}"
+  s3_bucket			= "${module.s3.s3_asg_id}"
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -157,6 +205,7 @@ module "lb" {
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -170,6 +219,7 @@ module "lbtg" {
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -179,13 +229,15 @@ module "asg" {
   source                        = "../modules/dev/asg"
   name                          = "${var.name}"
   env                           = "${var.env}"
-  subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
-  subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
-  ec2_launch_conf               = "${module.lc.ec2_launch_conf_id}"
+  subnet_private_az0            = "${module.subnet.subnet_private_asg_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_asg_az1_id}"
+  launch_template_id            = "${module.lat.launch_template_web_id}"
+  launch_template_version	= "${module.lat.launch_template_web_latest_version}"
   target_group_80_arn		= "${module.lbtg.lb_target_group_80_arn}"
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
@@ -201,25 +253,11 @@ module "lbl" {
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
-
-// Amazon MQ 
-module "mq" {
-  source                        = "../modules/dev/mq"
-  name                          = "${var.name}"
-  env                           = "${var.env}"
-  security_groups		= "${module.sg.sg_mq_broker_id}"
-  subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
-  subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
-
-  tags = {
-    Infra                       = "${var.name}"
-    Terraformed                 = "true"
-  }
-}
-
+/*
 // Amazon ElastiCache
 module "elc" {
   source                        = "../modules/dev/elc"
@@ -227,12 +265,50 @@ module "elc" {
   env                           = "${var.env}"
   vpc                           = "${module.vpc.vpc_id}"
   azs                   	= "${var.azs}"
-  subnet_private_az0            = "${module.subnet.subnet_private_az0_id}"
-  subnet_private_az1            = "${module.subnet.subnet_private_az1_id}"
+  subnet_private_az0            = "${module.subnet.subnet_private_elc_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_elc_az1_id}"
   security_group		= "${module.sg.sg_elasticache_id}"
 
   tags = {
     Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
     Terraformed                 = "true"
   }
 }
+
+// Amazon MQ
+module "mq" {
+  source                        = "../modules/dev/mq"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  security_groups               = "${module.sg.sg_mq_broker_id}"
+  subnet_private_az0            = "${module.subnet.subnet_private_mq_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_mq_az1_id}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+
+// Amazon Relational Database Service (RDS)
+module "rds" {
+  source                        = "../modules/dev/rds"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  azs                           = "${var.azs}"
+  vpc                        	= "${module.vpc.vpc_id}"
+  security_groups               = "${module.sg.sg_rds_id}"
+  kms_key			= "${module.kms.kms_rds_key_arn}"
+  subnet_private_az0            = "${module.subnet.subnet_private_rds_az0_id}"
+  subnet_private_az1            = "${module.subnet.subnet_private_rds_az1_id}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+*/
+

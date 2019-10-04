@@ -2,7 +2,7 @@ variable "name" {}
 
 variable "env" {}
 
-variable "kms_key" {}
+variable "s3_bucket" {}
 
 variable "tags" {
   type    = "map"

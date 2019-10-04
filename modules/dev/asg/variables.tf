@@ -6,7 +6,9 @@ variable "subnet_private_az0" {}
 
 variable "subnet_private_az1" {}
 
-variable "ec2_launch_conf" {}
+variable "launch_template_id" {}
+
+variable "launch_template_version" {}
 
 variable "target_group_80_arn" {}
 

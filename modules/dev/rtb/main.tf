@@ -45,12 +45,56 @@ resource "aws_route" "private_nat_gateway_az1" {
 
 
 // Instances
-resource "aws_route_table_association" "private_subnet_az0" {
-  subnet_id       = "${var.subnet_private_az0}"
+resource "aws_route_table_association" "private_subnet_ec2_az0" {
+  subnet_id       = "${var.subnet_private_ec2_az0}"
   route_table_id  = "${aws_route_table.rtb_private_az0.id}"
 }
 
-resource "aws_route_table_association" "private_subnet_az1" {
-  subnet_id       = "${var.subnet_private_az1}"
+resource "aws_route_table_association" "private_subnet_ec2_az1" {
+  subnet_id       = "${var.subnet_private_ec2_az1}"
+  route_table_id  = "${aws_route_table.rtb_private_az1.id}"
+}
+
+// AutoScaling Group
+resource "aws_route_table_association" "private_subnet_asg_az0" {
+  subnet_id       = "${var.subnet_private_asg_az0}"
+  route_table_id  = "${aws_route_table.rtb_private_az0.id}"
+}
+
+resource "aws_route_table_association" "private_subnet_asg_az1" {
+  subnet_id       = "${var.subnet_private_asg_az1}"
+  route_table_id  = "${aws_route_table.rtb_private_az1.id}"
+}
+
+// ElastiCache
+resource "aws_route_table_association" "private_subnet_elc_az0" {
+  subnet_id       = "${var.subnet_private_elc_az0}"
+  route_table_id  = "${aws_route_table.rtb_private_az0.id}"
+}
+
+resource "aws_route_table_association" "private_subnet_elc_az1" {
+  subnet_id       = "${var.subnet_private_elc_az1}"
+  route_table_id  = "${aws_route_table.rtb_private_az1.id}"
+}
+
+// MQ 
+resource "aws_route_table_association" "private_subnet_mq_az0" {
+  subnet_id       = "${var.subnet_private_mq_az0}"
+  route_table_id  = "${aws_route_table.rtb_private_az0.id}"
+}
+
+resource "aws_route_table_association" "private_subnet_mq_az1" {
+  subnet_id       = "${var.subnet_private_mq_az1}"
+  route_table_id  = "${aws_route_table.rtb_private_az1.id}"
+}
+
+// RDS
+resource "aws_route_table_association" "private_subnet_rds_az0" {
+  subnet_id       = "${var.subnet_private_rds_az0}"
+  route_table_id  = "${aws_route_table.rtb_private_az0.id}"
+}
+
+resource "aws_route_table_association" "private_subnet_rds_az1" {
+  subnet_id       = "${var.subnet_private_rds_az1}"
   route_table_id  = "${aws_route_table.rtb_private_az1.id}"
 }

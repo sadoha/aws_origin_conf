@@ -10,6 +10,8 @@ variable "region" {}
 
 variable "key_name" {}
 
+variable "iam_instance_profile" {}
+
 variable "security_group" {}
 
 variable "subnet_public_az1" {}

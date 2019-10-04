@@ -10,6 +10,10 @@ variable "key_name" {}
 
 variable "security_group" {}
 
+variable "iam_instance_profile" {}
+
+variable "s3_bucket" {}
+
 variable "instance_type" {
   description = "The type of ec2 instance"
   default = "t2.micro"

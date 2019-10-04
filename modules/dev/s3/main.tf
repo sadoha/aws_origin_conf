@@ -1,6 +1,7 @@
-resource "aws_s3_bucket" "s3_log_bucket" {
-  bucket = "s3-logs-bucket-${var.env}-${var.name}"
-  acl = "log-delivery-write"
+resource "aws_s3_bucket" "s3logs" {
+  bucket 		= "s3-s3logs-${var.env}-${var.name}"
+  acl 			= "log-delivery-write"
+  force_destroy 	= "true"
 
   versioning {
     enabled             = "true"
@@ -10,14 +11,24 @@ resource "aws_s3_bucket" "s3_log_bucket" {
     prevent_destroy     = "false"
   }
 
-  tags   = "${merge(map("Name", "s3-logs-bucket-${var.env}-${var.name}"), var.tags)}"
+  tags   = "${merge(map("Name", "s3-s3logs-${var.env}-${var.name}"), var.tags)}"
 }
 
-resource "aws_s3_bucket" "s3_web_state" {
-  bucket                = "s3-web-${var.env}-${var.name}"
-  acl                   = "public-read-write"
-  #acl                   = "private"
+resource "aws_s3_bucket" "asg" {
+  bucket                = "s3-asg-${var.env}-${var.name}"
+  acl                   = "private"
+  force_destroy 	= "true"
 
+/*
+  server_side_encryption_configuration {
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = "${var.kms_key}"
+      sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+*/
   versioning {
     enabled             = "true"
   }
@@ -27,9 +38,10 @@ resource "aws_s3_bucket" "s3_web_state" {
   }
 
   logging {
-    target_bucket = "${aws_s3_bucket.s3_log_bucket.id}"
-    target_prefix = "logs/web/"
+    target_bucket 	= "${aws_s3_bucket.s3logs.id}"
+    target_prefix 	= "logs/asg/"
   }
 
-  tags   = "${merge(map("Name", "s3-web-${var.env}-${var.name}"), var.tags)}"
+  tags   = "${merge(map("Name", "s3-asg-${var.env}-${var.name}"), var.tags)}"
 }
+
