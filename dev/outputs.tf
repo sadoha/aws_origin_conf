@@ -1,4 +1,3 @@
-/*
 //Load balancers
 output "lb_dns_name" {
   value = "${module.lb.lb_dns_name}"
@@ -106,4 +105,3 @@ output "db_instance_replica_endpoint1" {
 output "db_instance_replica_endpoint2" {
   value = "${module.rds.db_instance_replica_endpoint2}"
 }
-*/

@@ -257,7 +257,7 @@ module "lbl" {
     Terraformed                 = "true"
   }
 }
-/*
+
 // Amazon ElastiCache
 module "elc" {
   source                        = "../modules/dev/elc"
@@ -310,5 +310,5 @@ module "rds" {
     Terraformed                 = "true"
   }
 }
-*/
+
 
