@@ -166,6 +166,7 @@ module "ec2" {
   key_name                      = "${module.key.ssh_pair_ec2_id}"
   security_group                = "${module.sg.sg_bastion_id}"
   subnet_public_az1		= "${module.subnet.subnet_public_az1_id}"
+  s3_bucket			= "${module.s3.s3_asg_id}"
 
   tags = {
     Infra                       = "${var.name}"
@@ -199,6 +200,7 @@ module "lb" {
   name                          = "${var.name}"
   env                           = "${var.env}"
   vpc                           = "${module.vpc.vpc_id}"
+  azs                   	= "${var.azs}"
   security_groups		= "${module.sg.sg_lb_id}"
   subnet_public_az0		= "${module.subnet.subnet_public_az0_id}"
   subnet_public_az1		= "${module.subnet.subnet_public_az1_id}"
@@ -250,6 +252,21 @@ module "lbl" {
   vpc                           = "${module.vpc.vpc_id}"
   load_balancer_arn		= "${module.lb.lb_arn}"
   target_group_arn		= "${module.lbtg.lb_target_group_80_arn}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+
+// Amazon Route53
+module "r53" {
+  source                        = "../modules/dev/r53"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  lb_zone_id			= "${module.lb.lb_zone_id}"
+  lb_name			= "${module.lb.lb_dns_name}"
 
   tags = {
     Infra                       = "${var.name}"
@@ -310,5 +327,4 @@ module "rds" {
     Terraformed                 = "true"
   }
 }
-
 

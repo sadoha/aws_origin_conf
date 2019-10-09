@@ -3,6 +3,8 @@ data "template_file" "web_template_file" {
 
   vars = {
     s3_bucket = "${var.s3_bucket}"
+    name                        = "${var.name}"
+    env                         = "${var.env}"
   }
 }
 

@@ -8,6 +8,8 @@ variable "amis" {}
 
 variable "region" {}
 
+variable "s3_bucket" {}
+
 variable "key_name" {}
 
 variable "iam_instance_profile" {}

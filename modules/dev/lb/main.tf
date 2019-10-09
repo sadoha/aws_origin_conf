@@ -7,6 +7,4 @@ resource "aws_lb" "lb" {
   enable_deletion_protection            = "false"
 
   tags   = "${merge(map("Name", "lb-${var.env}-${var.name}"), var.tags)}"
-
 }
-

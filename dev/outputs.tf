@@ -1,3 +1,12 @@
+//Route53
+output "route53_zone_name" {
+  value = "${module.r53.zone_name}"
+}
+
+output "route53_ns" {
+  value = "${module.r53.ns}"
+}
+
 //Load balancers
 output "lb_dns_name" {
   value = "${module.lb.lb_dns_name}"

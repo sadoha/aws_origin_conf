@@ -45,3 +45,11 @@ resource "aws_s3_bucket" "asg" {
   tags   = "${merge(map("Name", "s3-asg-${var.env}-${var.name}"), var.tags)}"
 }
 
+
+resource "aws_s3_bucket_object" "web" {
+  bucket 		= "${aws_s3_bucket.asg.id}"
+  acl    		= "private"
+  key    		= "index.tpl"
+  source 		= "templates/index.tpl"
+  etag 			= "${md5(file("templates/index.tpl"))}"
+}

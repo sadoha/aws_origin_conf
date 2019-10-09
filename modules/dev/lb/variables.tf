@@ -4,6 +4,8 @@ variable "env" {}
 
 variable "vpc" {}
 
+variable "azs" {}
+
 variable "security_groups" {}
 
 variable "subnet_public_az0" {}
