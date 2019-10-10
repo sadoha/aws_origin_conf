@@ -13,7 +13,11 @@ variable "domain_name" {
 
 variable "ttl" {
   description = "The global variable for time to live"
-  default = "3600"
+  default = "300"
+}
+
+variable "subdomains" {  
+  default = ["www", "mail", "cal", "docs"]
 }
 
 variable "tags" {

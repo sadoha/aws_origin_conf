@@ -244,6 +244,36 @@ module "asg" {
   }
 }
 
+// Amazon AutoScaling Policy
+module "asgpcy" {
+  source                        = "../modules/dev/asgpcy"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  asg_group_name		= "${module.asg.asg_web_name}"
+	
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+
+// Amazon CloudWatch Metric
+module "cwchmetric" {
+  source                        = "../modules/dev/cwchmetric"
+  name                          = "${var.name}"
+  env                           = "${var.env}"
+  asg_group_name		= "${module.asg.asg_web_name}"
+  alarm_actions_heavy_in	= "${module.asgpcy.asg_policy_heavy_in_arn}"
+  alarm_actions_heavy_out	= "${module.asgpcy.asg_policy_heavy_out_arn}"
+
+  tags = {
+    Infra                       = "${var.name}"
+    Environment                 = "${var.env}"
+    Terraformed                 = "true"
+  }
+}
+
 // Amazon ABL Listeners
 module "lbl" {
   source                        = "../modules/dev/lbl"

@@ -1,11 +1,11 @@
 resource "aws_eip" "eip_nat_gateway_az0" {
   vpc      	= true
-  tags   	= "${merge(map("Name", "eip-${var.azs[0]}-${var.env}-${var.name}"), var.tags)}"
+  tags   	= "${merge(map("Name", "eip-natgw-${var.azs[0]}-${var.env}-${var.name}"), var.tags)}"
 }
 
 resource "aws_eip" "eip_nat_gateway_az1" {
   vpc      	= true
-  tags   	= "${merge(map("Name", "eip-${var.azs[1]}-${var.env}-${var.name}"), var.tags)}"
+  tags   	= "${merge(map("Name", "eip-natgw-${var.azs[1]}-${var.env}-${var.name}"), var.tags)}"
 }
 
 resource "aws_nat_gateway" "nat_gateway_az0" {
