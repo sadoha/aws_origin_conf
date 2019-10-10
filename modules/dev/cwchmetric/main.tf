@@ -1,3 +1,17 @@
+// To view metrics for your instances, for Display, choose EC2. To get a larger view of a single metric, select its graph. The following metrics are available for instances:
+
+// CPU Utilization — CPUUtilization
+// Disk Reads — DiskReadBytes
+// Disk Read Operations — DiskReadOps
+// Disk Writes — DiskWriteBytes
+// Disk Write Operations — DiskWriteOps
+// Network In — NetworkIn
+// Network Out — NetworkOut
+// Status Check Failed (Any) — StatusCheckFailed
+// Status Check Failed (Instance) — StatusCheckFailed_Instance
+// Status Check Failed (System) — StatusCheckFailed_System
+
+
 resource "aws_cloudwatch_metric_alarm" "heavy_asg_cpu_usage_is_very_high" {
   alarm_name 				= "heavy-asg-cpu-usage-is-very-high"
   comparison_operator 			= "GreaterThanOrEqualToThreshold"

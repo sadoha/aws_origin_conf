@@ -357,4 +357,3 @@ module "rds" {
     Terraformed                 = "true"
   }
 }
-
