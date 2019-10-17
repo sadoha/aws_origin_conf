@@ -6,6 +6,6 @@
     
  * * To start configuration of environment you have to go to the folder [dev](https://github.com/sadoha/aws_origin_conf/tree/master/dev)
 
-![Test](https://redrumers.files.wordpress.com/2015/06/15016_terminator_terminator_exoskeleton1.jpg)
+![Test](https://github.com/sadoha/aws_origin_conf/blob/master/scheme.png)
 
 
